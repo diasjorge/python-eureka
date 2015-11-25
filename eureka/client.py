@@ -119,7 +119,8 @@ class EurekaClient(object):
 
     def register(self, initial_status="STARTING"):
         data_center_info = {
-            'name': self.data_center
+            'name': self.data_center,
+            '@class': 'com.netflix.appinfo.DataCenterInfo'
         }
         if self.data_center == "Amazon":
             data_center_info['metadata'] = {
@@ -138,14 +139,23 @@ class EurekaClient(object):
             'instance': {
                 'hostName': self.host_name,
                 'app': self.app_name,
-                'vipAddr': self.vip_address or '',
-                'secureVipAddr': self.secure_vip_address or '',
+                'vipAddress': self.vip_address or '',
+                'secureVipAddress': self.secure_vip_address or '',
                 'status': initial_status,
-                'port': self.port,
-                'securePort': self.secure_port,
                 'dataCenterInfo': data_center_info
             }
         }
+        if self.port:
+            instance_data['instance']['port'] = {
+                "$": self.port,
+                "@enabled": True
+            }
+        if self.secure_port:
+            instance_data['instance']['securePort'] = {
+                "$": self.secure_port,
+                "@enabled": True
+            }
+
         success = False
         for eureka_url in self.eureka_urls:
             try:
@@ -223,4 +233,3 @@ class EurekaClient(object):
 
     def get_app_instance(self, app_id, instance_id):
         return self._get_from_any_instance("apps/%s/%s" % (app_id, instance_id))
-
