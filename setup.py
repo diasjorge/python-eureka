@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='eureka-client',
-    version='0.6.2',
+    version='0.6.3.dev0',
     description='A python interface for Netflix Eureka',
     author=u'Jorge Dias',
     author_email='jorge@mrdias.com',
