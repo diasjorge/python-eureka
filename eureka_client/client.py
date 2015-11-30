@@ -7,6 +7,7 @@ import ec2metadata
 import logging
 import dns.resolver
 from eureka_client.requests import EurekaHTTPException
+import sys
 
 
 logger = logging.getLogger('eureka.client')
@@ -26,6 +27,7 @@ class EurekaUpdateFailedException(EurekaClientException):
 
 class EurekaHeartbeatFailedException(EurekaClientException):
     pass
+
 
 class EurekaGetFailedException(EurekaClientException):
     pass
@@ -180,10 +182,10 @@ class EurekaClient(object):
                 r.raise_for_status()
                 success = True
                 break
-            except (EurekaHTTPException, URLError) as e:
+            except (EurekaHTTPException, URLError):
                 pass
         if not success:
-            raise EurekaRegistrationFailedException("Did not receive correct reply from any instances")
+            raise EurekaRegistrationFailedException("Did not receive correct reply from any instances"), None, sys.exc_info()[2]
 
     def update_status(self, new_status):
         instance_id = self.host_name
@@ -203,7 +205,7 @@ class EurekaClient(object):
             except (EurekaHTTPException, URLError) as e:
                 pass
         if not success:
-            raise EurekaUpdateFailedException("Did not receive correct reply from any instances")
+            raise EurekaUpdateFailedException("Did not receive correct reply from any instances"), None, sys.exc_info()[2]
 
     def heartbeat(self):
         instance_id = self.host_name
@@ -219,7 +221,7 @@ class EurekaClient(object):
             except (EurekaHTTPException, URLError) as e:
                 pass
         if not success:
-            raise EurekaHeartbeatFailedException("Did not receive correct reply from any instances")
+            raise EurekaHeartbeatFailedException("Did not receive correct reply from any instances"), None, sys.exc_info()[2]
 
     #a generic get request, since most of the get requests for discovery will take a similar form
     def _get_from_any_instance(self, endpoint):
@@ -231,7 +233,7 @@ class EurekaClient(object):
                 return r.json()
             except (EurekaHTTPException, URLError):
                 pass
-        raise EurekaGetFailedException("Failed to GET %s from all instances" % endpoint)
+        raise EurekaGetFailedException("Failed to GET %s from all instances" % endpoint), None, sys.exc_info()[2]
 
     def get_apps(self):
         return self._get_from_any_instance("apps")
