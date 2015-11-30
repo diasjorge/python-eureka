@@ -1,10 +1,9 @@
 # encoding: utf-8
 from setuptools import setup, find_packages
-from eureka_client import __version__ as version
 
 setup(
     name='eureka-client',
-    version=version,
+    version='0.6.1',
     description='A python interface for Netflix Eureka',
     author=u'Jorge Dias',
     author_email='jorge@mrdias.com',
