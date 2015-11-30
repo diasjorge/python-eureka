@@ -2,11 +2,11 @@ import json
 import random
 from urllib2 import URLError
 from urlparse import urljoin
-from eureka import requests
+from eureka_client import requests
 import ec2metadata
 import logging
 import dns.resolver
-from eureka.requests import EurekaHTTPException
+from eureka_client.requests import EurekaHTTPException
 
 
 logger = logging.getLogger('eureka.client')

@@ -1,5 +1,5 @@
 import urllib2
-from eureka import __version__ as client_version
+from eureka_client import __version__ as client_version
 from StringIO import StringIO
 import gzip
 import json
