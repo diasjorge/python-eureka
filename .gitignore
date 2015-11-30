@@ -1,4 +1,4 @@
 /build/
 /dist
 *.pyc
-/python_eureka.egg-info/
+*.egg-info
