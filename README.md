@@ -8,7 +8,7 @@ It's fairly straight forward to use once you hve setup Eureka itself. Consider t
 
 ```python
 
-from eureka.client import EurekaClient
+from eureka_client import EurekaClient
 import logging
 
 logging.basicConfig()
