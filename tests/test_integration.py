@@ -21,6 +21,8 @@ class TestEurekaClient(unittest.TestCase):
             port=80,
             secure_vip_address="https://my-app.example.com/",
             secure_port=443,
+            home_page_url="http://my-app.example.com/home",
+            status_page_url="http://my-app.example.com/status",
             health_check_url="http://my-app.example.com/healthCheck",
             app_group_name="appgroup",
             asg_name="asgname",
@@ -51,6 +53,10 @@ class TestEurekaClient(unittest.TestCase):
                          instance_info.get('vipAddress'))
         self.assertEqual("http://my-app.example.com/healthCheck",
                          instance_info.get('healthCheckUrl'))
+        self.assertEqual("http://my-app.example.com/home",
+                         instance_info.get('homePageUrl'))
+        self.assertEqual("http://my-app.example.com/status",
+                         instance_info.get('statusPageUrl'))
 
     def _get_app_info(self):
         for attempt in range(10):

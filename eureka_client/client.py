@@ -39,6 +39,7 @@ class EurekaClient(object):
                  eureka_port=None, host_name=None, data_center="Amazon",
                  ip_address=None, vip_address=None, secure_vip_address=None,
                  port=None, secure_port=None, prefer_same_zone=True,
+                 home_page_url=None, status_page_url=None,
                  health_check_url=None, secure_health_check_url=None,
                  app_group_name=None, asg_name=None, metadata=None):
         super(EurekaClient, self).__init__()
@@ -67,6 +68,8 @@ class EurekaClient(object):
         self.eureka_port = eureka_port
         # Relative URL to eureka
         self.context = context
+        self.home_page_url = home_page_url
+        self.status_page_url = status_page_url
         self.health_check_url = health_check_url
         self.secure_health_check_url = secure_health_check_url
         self.app_group_name = app_group_name
@@ -156,6 +159,8 @@ class EurekaClient(object):
                 'secureVipAddress': self.secure_vip_address or '',
                 'status': initial_status,
                 'dataCenterInfo': data_center_info,
+                'homePageUrl': self.home_page_url,
+                'statusPageUrl': self.status_page_url,
                 'healthCheckUrl': self.health_check_url,
                 'secureHealthCheckUrl': self.secure_health_check_url,
                 'appGroupName': self.app_group_name,
